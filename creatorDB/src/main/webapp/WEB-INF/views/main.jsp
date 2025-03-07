@@ -196,7 +196,7 @@
 	    } catch (error) {
 	        console.error("Error:", error);
 	    }
-	}
+	} 
 
 
 	function convertToUnit(value){

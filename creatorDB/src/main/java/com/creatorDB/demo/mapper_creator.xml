@@ -14,7 +14,7 @@
 		    country as "COUNTRY",
 		    channel_id as "CHANNEL_ID"
      	from
-     		creator
+     		creator 
 		where
 			upper(nickname) like upper('%${keyword}%')
 	</select>

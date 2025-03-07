@@ -6,3 +6,4 @@
 <script src="/js/jquery-1.11.0.min.js"></script>
 <script src="/js/common.js?<%=Math.random()%>"></script>
 <link href="/css/style.css?<%=Math.random()%>" rel="stylesheet">
+ 
