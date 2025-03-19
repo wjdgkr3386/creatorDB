@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.creatorDB.demo.LoginDAO">
+
+<select id="checkMid" parameterType="com.creatorDB.demo.LoginDTO" resultType="int">
+	select count(*) from users where mid=#{mid}
+</select>
+
+<insert id="insertUserInfo" parameterType="com.creatorDB.demo.LoginDTO">
+	insert into users (
+		name,
+		mid,
+		pwd,
+		jumin_number1,
+		jumin_number2,
+		phone_number1,
+		phone_number2,
+		phone_number3,
+		email,
+		occupation,
+		region,
+		address,
+		r_code,
+		auto_login
+	) values (
+		#{name},
+		#{mid},
+		#{pwd},
+		#{jumin_number1},
+		#{jumin_number2},
+		#{phone_number1},
+		#{phone_number2},
+		#{phone_number3},
+		#{email},
+		#{occupation},
+		#{region},
+		#{address},
+		#{r_code},
+		#{auto_login}
+	)
+</insert>
+
+<select id="checkId" parameterType="com.creatorDB.demo.LoginDTO" resultType="java.util.HashMap">
+	select
+		mid as "MID",
+		pwd as "PWD",
+		auto_login as "AUTO_LOGIN"
+	from
+		users
+	where
+		mid=#{mid} and pwd=#{pwd}
+</select>
+
+<select id="getId" parameterType="String" resultType="java.util.HashMap">
+	select
+		mid as "MID",
+		pwd as "PWD",
+		auto_login as "AUTO_LOGIN"
+	from
+		users
+	where
+		mid=#{mid}
+</select>
+
+<update id="updateAuto_login" parameterType="com.creatorDB.demo.LoginDTO">
+	update users set auto_login=#{auto_login} where mid=#{mid}
+</update>
+
+</mapper>

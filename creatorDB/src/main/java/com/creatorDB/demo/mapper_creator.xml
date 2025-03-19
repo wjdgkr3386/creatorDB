@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.creatorDB.demo.CreatorDAO">
+
+	<select id="searchCreator" parameterType="com.creatorDB.demo.CreatorDTO" resultType="java.util.HashMap">
+		select     
+			nickname as "NICKNAME",
+		    creator_image as "CREATOR_IMAGE",
+		    description as "DESCRIPTION",
+		    subscriber_count as "SUBSCRIBER_COUNT",
+		    video_count as "VIDEO_COUNT",
+		    view_count as "VIEW_COUNT",
+		    country as "COUNTRY",
+		    channel_id as "CHANNEL_ID",
+		    last_update as "LAST_UPDATE"
+     	from
+     		creator 
+		where
+			upper(nickname) like upper('%${keyword}%')
+	</select>
+	
+	<select id="isCreator" parameterType="com.creatorDB.demo.CreatorDTO" resultType="int">
+		select count(*) from creator where channel_id=#{channel_id}
+	</select>
+	
+	<select id="getChannel" parameterType="com.creatorDB.demo.CreatorDTO" resultType="java.util.HashMap">
+		select     
+			nickname as "NICKNAME",
+		    creator_image as "CREATOR_IMAGE",
+		    description as "DESCRIPTION",
+		    subscriber_count as "SUBSCRIBER_COUNT",
+		    video_count as "VIDEO_COUNT",
+		    view_count as "VIEW_COUNT",
+		    country as "COUNTRY",
+		    channel_id as "CHANNEL_ID",
+		    last_update as "LAST_UPDATE"
+     	from
+     		creator 
+		where
+			channel_id=#{channel_id}
+	</select>
+	
+	<insert id="insertCreator" parameterType="com.creatorDB.demo.CreatorDTO">
+		insert into creator (
+			nickname,
+		    creator_image,
+		    description,
+		    subscriber_count,
+		    video_count,
+		    view_count,
+		    country,
+		    channel_id
+		) values(
+			#{nickname},
+		    #{creator_image},
+		    #{description},
+		    #{subscriber_count},
+		    #{video_count},
+		    #{view_count},
+		    #{country},
+		    #{channel_id}
+		)
+	</insert>
+	
+	<update id="updateChannel" parameterType="com.creatorDB.demo.CreatorDTO">
+		UPDATE creator set
+			nickname=#{nickname},
+		    creator_image=#{creator_image},
+		    description=#{description},
+		    subscriber_count=#{subscriber_count},
+		    video_count=#{video_count},
+		    view_count=#{view_count},
+		    country=#{country},
+		    channel_id=#{channel_id},
+		    last_update=sysdate
+		where
+			channel_id=#{channel_id}
+	</update>
+
+	
+	
+</mapper>
