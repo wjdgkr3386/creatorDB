@@ -39,7 +39,6 @@
 	width:100px;
 	height: 50px;
 	border-radius: 10px;
-	background-color: yellowgreen;
 	border:none;
 	font-size:15px;
 	font-weight: bold;

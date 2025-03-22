@@ -1,6 +1,8 @@
 package com.creatorDB.demo;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -32,10 +34,8 @@ public class LoginController {
 		
 		if(mid!=null) {
 			Map<String, Object> map = loginDAO.getId(mid);
-			String auto_login = (String) map.get("AUTO_LOGIN");
 			String mid1 = (String) map.get("MID");
 			String pwd = (String) map.get("PWD");
-			mav.addObject("auto_login", auto_login);
 			mav.addObject("mid", mid1);
 			mav.addObject("pwd", pwd);
 		}
@@ -56,15 +56,11 @@ public class LoginController {
 		
 		if(cnt>0) {
 			try {
-				loginDTO.setAuto_login(loginDTO.getAuto_login()==null?"n":"y");
-				loginService.updateAuto_login(loginDTO);
 				map = loginDAO.checkId(loginDTO);
 			}catch(Exception e) {
 				System.out.println(e);
 			}
 			String mid = (String) map.get("MID");
-			String pwd = (String) map.get("PWD");
-
 			session.setAttribute( "mid", mid );
 		}
 
@@ -84,7 +80,6 @@ public class LoginController {
 	public int signUpProc(
 			LoginDTO loginDTO
 	) {
-		loginDTO.setAuto_login(loginDTO.getAuto_login()==null?"n":"y");
 		int cnt = 0;
 		
 		try {
@@ -102,7 +97,36 @@ public class LoginController {
         session.invalidate();
         response.sendRedirect("/main.do");
     }
+  
+	@RequestMapping( value="/findAccount.do")
+	public ModelAndView findAccount(
+	) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("findAccount.jsp");
+		return mav;
+	}
 	
+	@RequestMapping( value="/idFindProc.do")
+	public Map<String, Object> idFindProc(
+			LoginDTO loginDTO
+	) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Map<String, Object>> idList = loginDAO.idFind(loginDTO);
+		map.put("idList", idList);
+		
+		return map;
+	}
+	
+	@RequestMapping( value="/passwordFindProc.do")
+	public Map<String, Object> passwordFindProc(
+			LoginDTO loginDTO
+	) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String password = loginDAO.passwordFind(loginDTO);
+		map.put("password", password);
+		
+		return map;
+	}
 	
 	
 	

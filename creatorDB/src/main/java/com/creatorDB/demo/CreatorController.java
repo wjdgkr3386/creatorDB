@@ -42,7 +42,7 @@ public class CreatorController {
 	@RequestMapping( value="/searchCreatorInfoProc.do")
 	public Map<String, Object> searchCreatorInfoProc(
 			CreatorDTO creatorDTO
-	) {		
+	) {
 		Map<String, Object> map = new HashMap<String, Object>();		
 		List<Map<String, Object>> creatorList = creatorDAO.searchCreator(creatorDTO);
 		
@@ -99,36 +99,6 @@ public class CreatorController {
 		}
 		
 		return cnt;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	@RequestMapping( value="/test.do")
-	public ModelAndView test(
-	) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.setViewName("test.jsp");
-		return mav;
-	}
-	
-	@RequestMapping( value="/test2.do")
-	public ModelAndView test2(
-	) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.setViewName("test2.jsp");
-		return mav;
 	}
 	
 	@RequestMapping( value="/error.do")

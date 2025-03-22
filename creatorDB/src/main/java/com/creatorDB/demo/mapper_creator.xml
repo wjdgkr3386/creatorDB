@@ -18,6 +18,8 @@
      		creator 
 		where
 			upper(nickname) like upper('%${keyword}%')
+		order by
+			to_number(subscriber_count) desc
 	</select>
 	
 	<select id="isCreator" parameterType="com.creatorDB.demo.CreatorDTO" resultType="int">

@@ -113,7 +113,6 @@
 	}
 </style>
 <script>
-	
 	$(function(){init();});
 	function init(){
 		//엔터를 눌렀을때 폼 제출 방지
@@ -126,37 +125,29 @@
 		});	
 	}
 
-	let API_KEY = "AIzaSyA0Z8vTaiFyZ9hW6IE41ZlPYK5xj-63iso";
 	//채널 검색
 	async function channelSearch() {
 	    try {
 	        let isExist = await searchCreatorInfo();    
-	        if (isExist != 0) return;  // 이미 존재하면 종료
+	        if (isExist != 0) return;
 
 	        var keyword = $("[name='keyword']").val().trim();
-			var URL = `https://www.googleapis.com/youtube/v3/search?&q=`+keyword+`&type=channel&key=`+API_KEY;
-
-	        // fetch() 요청 실행
-	        const response = await fetch(URL);
-
-	        // 응답 상태 확인
+			var URL = `/api/youtube/search?keyword=`+keyword;
+			
+			const response = await fetch(URL);
 	        if (!response.ok) {
 	            throw new Error(`HTTP 오류! 상태 코드: ${response.status}`);
 	        }
-
-	        // JSON 데이터 파싱
 	        const data = await response.json();
-	        
-	        // 검색 결과가 있는지 확인
 	        if (!data.items || data.items.length === 0) {
 	            throw new Error("검색된 채널이 없습니다.");
 	        }
-
 	        const channelId = data.items[0].id.channelId;
 
-	        // 채널 존재 여부 확인
 	        isExist = await getChannel(channelId);
-	        if (isExist != 0) return;
+	        if (isExist != 0) {
+	        	return;
+	        }
 
 	        // 채널 정보 가져와서 화면에 출력
 	        getChannelInfo(channelId);
@@ -178,7 +169,7 @@
 		        	var obj = response;
 	        		var creatorList = obj.creatorList;
 		        	var resultCount = obj.resultCount;
-		        	
+
 		  			if(resultCount>0) {
 		  				
 		  				for(var i=0; i<resultCount; i++){
@@ -257,8 +248,6 @@
 	    	var response = await fetchChannel(channelId);
 	    	data = await response.json();
 	    	
-	        console.log(data);
-
 	        var dataList = $(".td-dataList");
 	        var divB = $(".div-table");
 	        divB.html("");
@@ -304,13 +293,6 @@
 		        "post",
 		        formObj,
 		        function (cnt) {
-		        	if(cnt>0){
-		        		console.log("성공");
-		        	}else if(cnt==0){
-		        		console.log("실패");
-		        	}else if(cnt==-13){
-		        		console.log("이미 있음");
-		        	}
 		        }
 		    );
 	}
@@ -355,7 +337,7 @@
 	
 	function getCountryName(countryCode){		
 	    if (!countryCode) {
-	        return "0"; // value가 undefined, null, 빈 문자열인 경우 0 반환
+	        return "0";
 	    }
 	    
 		let countryName;
@@ -414,7 +396,7 @@
 	}
  
 	async function fetchChannel(channelId){
-	    var URL = `https://www.googleapis.com/youtube/v3/channels?&part=brandingSettings,statistics,snippet&maxResults=1&id=` + channelId + `&key=` + API_KEY;
+	    var URL = `/api/youtube/channel?channelId=`+channelId;
 	    try {
 	        const response = await fetch(URL);
 	        return response;
@@ -454,11 +436,6 @@
 		        "post",
 		        formObj,
 		        function (cnt) {
-		        	if(cnt>0){
-		        		console.log("성공");
-		        	}else if(cnt==0){
-		        		console.log("실패");
-		        	}
 		        }
 		    );
 	}

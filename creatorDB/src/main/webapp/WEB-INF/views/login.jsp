@@ -58,11 +58,6 @@
 <script>
 	$(function(){init();});
 	function init(){
-		$("[name='auto_login']").prop("checked", ${requestScope.auto_login eq 'y'} );
-		if($("[name='auto_login']").is(":checked")){
-			$("[name='mid']").val("${mid}");
-			$("[name='pwd']").val("${pwd}");
-		}
 	}
 	
 	function login(){
@@ -116,9 +111,8 @@
 			<input type="password" class="inputField" name="pwd" placeholder="••••••••">
 		</div>
 		<div>
-			<div style="display:flex; justify-content:space-between; align-items:center; margin:12 0 0 0;">
-				<span style="font-size:14px;"><input type="checkbox" name="auto_login" value="y"> 로그인 유지</span>
-				<a style="color:steelblue; font-size:14px; cursor:pointer;">비밀번호 찾기</a>
+			<div style="text-align:right; margin:12 0 0 0;">
+				<a style="color:steelblue; font-size:14px; cursor:pointer;" onclick="location.href='/findAccount.do'">계정 찾기</a>
 			</div>
 		</div>
 		<div>

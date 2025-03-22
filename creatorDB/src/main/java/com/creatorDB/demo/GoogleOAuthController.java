@@ -25,11 +25,11 @@ import com.google.api.client.util.Value;
 @RequestMapping("/auth/google")
 public class GoogleOAuthController {
 	
-    private final EnvTestRunner envTestRunner;
+    private final EnvRunner envRunner;
 
     // 생성자 주입 (Spring이 관리하는 Bean을 주입)
-    public GoogleOAuthController(EnvTestRunner envTestRunner) {
-        this.envTestRunner = envTestRunner;
+    public GoogleOAuthController(EnvRunner envRunner) {
+        this.envRunner = envRunner;
     }
     
     private static final String REDIRECT_URI = "http://localhost:8081/auth/google/callback";
@@ -44,8 +44,8 @@ public class GoogleOAuthController {
     ) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
         // Spring이 관리하는 Bean을 통해 환경변수 가져오기
-        String CLIENT_ID = envTestRunner.getCLIENT_ID();
-        String CLIENT_SECRET = envTestRunner.getCLIENT_SECRET();
+        String CLIENT_ID = envRunner.getCLIENT_ID();
+        String CLIENT_SECRET = envRunner.getCLIENT_SECRET();
          
         // Google OAuth 토큰 요청을 위한 파라미터
         HttpHeaders headers = new HttpHeaders();

@@ -17,14 +17,6 @@ public class LoginServiceImpl implements LoginService{
 		cnt = loginDAO.insertUserInfo(loginDTO);
 		return cnt;
 	}
-
-	public int updateAuto_login(LoginDTO loginDTO) {
-		int cnt = 0;
-		
-		loginDAO.updateAuto_login(loginDTO);
-		
-		return cnt;
-	}
 	
 	
 	

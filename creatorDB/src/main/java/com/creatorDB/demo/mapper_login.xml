@@ -21,8 +21,7 @@
 		occupation,
 		region,
 		address,
-		r_code,
-		auto_login
+		r_code
 	) values (
 		#{name},
 		#{mid},
@@ -36,16 +35,14 @@
 		#{occupation},
 		#{region},
 		#{address},
-		#{r_code},
-		#{auto_login}
+		#{r_code}
 	)
 </insert>
 
 <select id="checkId" parameterType="com.creatorDB.demo.LoginDTO" resultType="java.util.HashMap">
 	select
 		mid as "MID",
-		pwd as "PWD",
-		auto_login as "AUTO_LOGIN"
+		pwd as "PWD"
 	from
 		users
 	where
@@ -55,16 +52,37 @@
 <select id="getId" parameterType="String" resultType="java.util.HashMap">
 	select
 		mid as "MID",
-		pwd as "PWD",
-		auto_login as "AUTO_LOGIN"
+		pwd as "PWD"
 	from
 		users
 	where
 		mid=#{mid}
 </select>
 
-<update id="updateAuto_login" parameterType="com.creatorDB.demo.LoginDTO">
-	update users set auto_login=#{auto_login} where mid=#{mid}
-</update>
+<select id="idFind" parameterType="com.creatorDB.demo.LoginDTO" resultType="java.util.HashMap">
+	select
+		mid as "MID"
+	from
+		users
+	where
+		name=#{name}
+		and
+		jumin_number1=#{jumin_number1}
+		and
+		jumin_number2=#{jumin_number2}
+</select>
+
+<select id="passwordFind" parameterType="com.creatorDB.demo.LoginDTO" resultType="String">
+	select
+		pwd as "PWD"
+	from
+		users
+	where
+		mid=#{mid}
+		and
+		jumin_number1=#{jumin_number1}
+		and
+		jumin_number2=#{jumin_number2}
+</select>
 
 </mapper>
