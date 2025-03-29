@@ -10,7 +10,6 @@
 
 .a-container{
 	width : 580px;
-	height: 800px;
 	border: 1px solid black;
 	padding: 20px;
 }
@@ -50,23 +49,8 @@
 	$(function(){init();});
 	function init(){
 		
-		$("[name='name']").val("김정학");
-		$("[name='mid']").val("wjdgkr3386");
-		$("[name='pwd']").val("kjh3765!");
-		$("[name='jumin_number1']").val("970706");
-		$("[name='jumin_number2']").val("1411518");
-		$("[name='phone_number1']").val("010");
-		$("[name='phone_number2']").val("4614");
-		$("[name='phone_number3']").val("3386");
-		$("[name='email']").val("wjdgkr3386@naver.com");
-		$("[name='occupation']").val("개발자");
-		$("[name='region']").val("충남");
-		$("[name='address']").val("충청남도 천안시 동남구 서부대로 226-12 한라동백2차아파트 103동 106호");
-
 	}
 	
-	
-
 	function signUp() {
 		if(!isValid()) return;
 		
@@ -107,7 +91,6 @@
 		var occupation = $("[name='occupation']").val().trim();
 		var region = $("[name='region']").val().trim();
 		var address = $("[name='address']").val().trim();
-		
 		
 		if (name === "") {
 			messages.push("이름을 입력하세요.");
@@ -150,10 +133,6 @@
 			//첫 문자는 영어, @ 나오기 전까지는 영어+숫자 4~12자리, @ 하나, 영어+숫자 하나 이상, . 하나 , 소문자 2~4자리 
 		} else if (!/^([a-zA-Z][a-zA-Z0-9]{4,16})@([a-z0-9]+\.)[a-z]{2,4}$/.test(email)) { // 이메일 형식
 			messages.push("유효한 이메일 주소를 입력하세요.");
-			isValid = false;
-		}
-		if (occupation === "") {
-			messages.push("직업을 입력하세요.");
 			isValid = false;
 		}
 		if (region === "") {
@@ -213,9 +192,6 @@
 	        </div>
 	        <div class="a-block">
 	            <input type="text" id="email" name="email" class="input-size" placeholder="이메일">
-	        </div>
-	        <div class="a-block">
-	            <input type="text" id="occupation" name="occupation" class="input-size" placeholder="직업">
 	        </div>
 	        <div class="a-block">
 	            <select id="region" name="region">

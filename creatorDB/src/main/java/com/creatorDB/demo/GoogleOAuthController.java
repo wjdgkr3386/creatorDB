@@ -27,7 +27,7 @@ public class GoogleOAuthController {
 	
     private final EnvRunner envRunner;
 
-    // 생성자 주입 (Spring이 관리하는 Bean을 주입)
+    // 생성자로 bean 주입
     public GoogleOAuthController(EnvRunner envRunner) {
         this.envRunner = envRunner;
     }

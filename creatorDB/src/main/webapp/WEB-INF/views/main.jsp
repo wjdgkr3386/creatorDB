@@ -21,6 +21,7 @@
     	font-size: 15px;
     }
     .header {
+    	position: relative;
         background: #222;
         color: white;
         padding: 20px;
@@ -129,7 +130,9 @@
 	async function channelSearch() {
 	    try {
 	        let isExist = await searchCreatorInfo();    
-	        if (isExist != 0) return;
+	        if (isExist != 0) {
+	        	return;
+	        }
 
 	        var keyword = $("[name='keyword']").val().trim();
 			var URL = `/api/youtube/search?keyword=`+keyword;
@@ -191,14 +194,15 @@
 		        		}
 		        		
 						divB.find(".creatorTable").each(function(i, table){
-							$(this).find(".nickname").text(creatorList[i].NICKNAME);
-							adjustNicknameFontSize();
-							$(this).find(".creator_image").attr("src",creatorList[i].CREATOR_IMAGE);
-							$(this).find(".description").text(creatorList[i].DESCRIPTION);
-							$(this).find(".subscriber_count").text("구독자: "+convertToUnit(creatorList[i].SUBSCRIBER_COUNT)+"명");
-							$(this).find(".video_count").text("동영상: "+convertToUnit(creatorList[i].VIDEO_COUNT)+"개");
-							$(this).find(".view_count").text("조회수: "+formatNumberWithCommas(creatorList[i].VIEW_COUNT)+"회");
-							$(this).find(".country").text(getCountryName(creatorList[i].COUNTRY));
+							var thisTable = $(this);
+							thisTable.find(".nickname").text(creatorList[i].NICKNAME);
+							adjustNicknameFontSize(thisTable);
+							thisTable.find(".creator_image").attr("src",creatorList[i].CREATOR_IMAGE);
+							thisTable.find(".description").text(creatorList[i].DESCRIPTION);
+							thisTable.find(".subscriber_count").text("구독자: "+convertToUnit(creatorList[i].SUBSCRIBER_COUNT)+"명");
+							thisTable.find(".video_count").text("동영상: "+convertToUnit(creatorList[i].VIDEO_COUNT)+"개");
+							thisTable.find(".view_count").text("조회수: "+formatNumberWithCommas(creatorList[i].VIEW_COUNT)+"회");
+							thisTable.find(".country").text(getCountryName(creatorList[i].COUNTRY));
 						});
 		  			}
 		  			resolve(resultCount);
@@ -227,7 +231,7 @@
 		        		
 						var table = divB.find(".creatorTable");
 						table.find(".nickname").text(response.NICKNAME);
-						adjustNicknameFontSize();
+						adjustNicknameFontSize(table);
 						table.find(".creator_image").attr("src",response.CREATOR_IMAGE);
 						table.find(".description").text(response.DESCRIPTION);
 						table.find(".subscriber_count").text("구독자: "+convertToUnit(response.SUBSCRIBER_COUNT)+"명");
@@ -261,9 +265,9 @@
 	        const video_count = data.items[0].statistics.videoCount;
 	        const view_count = data.items[0].statistics.viewCount;
 	        const country = data.items[0].brandingSettings.channel.country;
-
+	        
 	        $(".nickname").text(nickname);
-	        adjustNicknameFontSize();
+	        adjustNicknameFontSize(divB.find(".creatorTable"));
 	        $(".creator_image").attr("src", creator_image);
 	        $(".description").text(description);
 	        $(".subscriber_count").text("구독자: " + convertToUnit(subscriber_count) + "명");
@@ -383,15 +387,15 @@
 		$(".div-table").prepend(tableHtml);
 	}
 	
-	function adjustNicknameFontSize() {
-	    var nicknameElement = document.querySelector(".nickname");
-	    if (!nicknameElement) return;
-
-	    var text = nicknameElement.textContent.trim();
+	function adjustNicknameFontSize(table) {
+	    if (!table) return;
+	    
+	    var nickname = table.find(".nickname");
+	    var text = nickname.text().trim();
 	    if (text.length >= 8) {
-	        nicknameElement.style.fontSize = "20px";
+	    	nickname.css({"font-size":"20px"});
 	    } else {
-	        nicknameElement.style.fontSize = "30px";
+	    	nickname.css({"font-size":"30px"});
 	    }
 	}
  
@@ -447,21 +451,24 @@
     <div class="header">
         <h1>CreatorDB</h1>
         <c:if test="${empty requestScope.mid and empty requestScope.access_token}">
-        	<div style="float: right;">
+        	<div style="position: absolute; left:90%;">
 	        	<span style="text-align:right; font-size:20px; padding:0 15 0 0; cursor:pointer;" onclick="location.href='/login.do'">
 	        		로그인
 	        	</span>
         	</div>
         </c:if>
         <c:if test="${not empty requestScope.mid or not empty requestScope.access_token}">
-        	<div style="float: right;">
+        	<div style="position: absolute; left:90%;">
 	        	<span style="text-align:right; font-size:20px; padding:0 15 0 0; cursor:pointer;" onclick="location.href='/logout.do'">
 	        		로그아웃
 	        	</span>
         	</div>
         </c:if>
-        <input type="text" class="searchBar" name="keyword" placeholder="크리에이터 검색...">
-        <input type="button" class="searchBtn" value="검색" onclick="channelSearch()">
+        <div>
+        	<input type="button" class="searchBtn" style="visibility:hidden;">
+	        <input type="text" class="searchBar" name="keyword" placeholder="크리에이터 검색...">
+	        <input type="button" class="searchBtn" value="검색" onclick="channelSearch()">
+        </div>
     </div>
 	<div style="height:50px;"></div>
 	
